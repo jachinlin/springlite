@@ -5,12 +5,13 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.github.jachinlin.springlite.beans.BeanDefinition;
+import com.github.jachinlin.springlite.beans.factory.BeanCreationException;
 import com.github.jachinlin.springlite.beans.factory.BeanFactory;
 import com.github.jachinlin.springlite.beans.factory.support.DefaultBeanFactory;
 import com.github.jachinlin.springlite.service.PetStoreService;
 
 public class BeanFactoryTest {
-
+	
 	@Test
 	public void testGetBeanDefinition() {
 		BeanFactory factory = new DefaultBeanFactory("petstore.xml");
@@ -26,6 +27,12 @@ public class BeanFactoryTest {
 		
 		assertNotNull(petStore);
 		
+	}
+	
+	@Test(expected=BeanCreationException.class)
+	public void testNotExistBean() {
+		BeanFactory factory = new DefaultBeanFactory("petstore.xml");
+		factory.getBean("notExistBean");
 	}
 
 }

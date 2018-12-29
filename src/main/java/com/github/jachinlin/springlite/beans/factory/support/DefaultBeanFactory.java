@@ -12,6 +12,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.github.jachinlin.springlite.beans.BeanDefinition;
+import com.github.jachinlin.springlite.beans.factory.BeanCreationException;
 import com.github.jachinlin.springlite.beans.factory.BeanFactory;
 import com.github.jachinlin.springlite.util.ClassUtils;;
 
@@ -67,7 +68,7 @@ public class DefaultBeanFactory implements BeanFactory {
 	public Object getBean(String beanID) {
 		BeanDefinition bd = this.getBeanDefinition(beanID);
 		if(bd == null) {
-			return null;
+			throw new BeanCreationException("Bean definition does not exist");
 		}
 		
 		ClassLoader cl = ClassUtils.getDefaultClassLoader();
