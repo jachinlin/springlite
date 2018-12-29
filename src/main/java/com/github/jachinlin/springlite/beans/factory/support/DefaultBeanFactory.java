@@ -12,10 +12,10 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.github.jachinlin.springlite.beans.BeanDefinition;
-import com.github.jachinlin.springlite.beans.factory.BeanFactoy;
+import com.github.jachinlin.springlite.beans.factory.BeanFactory;
 import com.github.jachinlin.springlite.util.ClassUtils;;
 
-public class DefaultBeanFactory implements BeanFactoy {
+public class DefaultBeanFactory implements BeanFactory {
 	
 	private static final String ID_ATTRIBUTE = "id";
 	private static final String CLASS_ATTRIBUTE = "class";
@@ -62,6 +62,31 @@ public class DefaultBeanFactory implements BeanFactoy {
 	public BeanDefinition getBeanDefinition(String beanID) {
 
 		return this.beanDefinitionMap.get(beanID);
+	}
+
+	public Object getBean(String beanID) {
+		BeanDefinition bd = this.getBeanDefinition(beanID);
+		if(bd == null) {
+			return null;
+		}
+		
+		ClassLoader cl = ClassUtils.getDefaultClassLoader();
+		String beanClassName = bd.getClassName();
+		try {
+			Class<?> cls = cl.loadClass(beanClassName);
+			return cls.newInstance(); // 缺省无参构造函数
+		 } catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
 	}
 
 }
