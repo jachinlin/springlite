@@ -34,5 +34,11 @@ public class BeanFactoryTest {
 		BeanFactory factory = new DefaultBeanFactory("petstore.xml");
 		factory.getBean("notExistBean");
 	}
+	
+	@Test(expected=BeanCreationException.class)
+	public void testInvalidBean() {
+		BeanFactory factory = new DefaultBeanFactory("petstore.xml");
+		factory.getBean("invalidBean");
+	}
 
 }

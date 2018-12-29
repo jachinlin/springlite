@@ -76,18 +76,9 @@ public class DefaultBeanFactory implements BeanFactory {
 		try {
 			Class<?> cls = cl.loadClass(beanClassName);
 			return cls.newInstance(); // 缺省无参构造函数
-		 } catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-		
+		 } catch (Exception e) {
+			throw new BeanCreationException("Create bean for " + beanClassName + "failed", e);
+		} 		
 	}
 
 }
