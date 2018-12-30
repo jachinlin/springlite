@@ -48,6 +48,8 @@ public class DefaultBeanFactory implements BeanFactory {
 			}
 		} catch (DocumentException e) {
 			throw new BeanDefinitionStoreException("IOException parsing XML document from " + configFile, e);
+		} catch (Exception e) {
+			throw new BeanDefinitionStoreException("parse XML document from " + configFile + "failed", e);
 		} finally {
 			if(is != null){
 				try {

@@ -47,5 +47,9 @@ public class BeanFactoryTest {
 		BeanFactory factory = new DefaultBeanFactory("notExistXML.xml");
 	}
 	
+	@Test(expected=BeanDefinitionStoreException.class)
+	public void testInvalidXML() {
+		BeanFactory factory = new DefaultBeanFactory("invalidXML.xml");
+	}
 
 }
