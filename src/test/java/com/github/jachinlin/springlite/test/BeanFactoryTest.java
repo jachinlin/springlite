@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.github.jachinlin.springlite.beans.BeanDefinition;
 import com.github.jachinlin.springlite.beans.factory.BeanCreationException;
+import com.github.jachinlin.springlite.beans.factory.BeanDefinitionStoreException;
 import com.github.jachinlin.springlite.beans.factory.BeanFactory;
 import com.github.jachinlin.springlite.beans.factory.support.DefaultBeanFactory;
 import com.github.jachinlin.springlite.service.PetStoreService;
@@ -40,5 +41,11 @@ public class BeanFactoryTest {
 		BeanFactory factory = new DefaultBeanFactory("petstore.xml");
 		factory.getBean("invalidBean");
 	}
+	
+	@Test(expected=BeanDefinitionStoreException.class)
+	public void testNotExistXML() {
+		BeanFactory factory = new DefaultBeanFactory("notExistXML.xml");
+	}
+	
 
 }

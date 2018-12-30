@@ -13,6 +13,7 @@ import org.dom4j.io.SAXReader;
 
 import com.github.jachinlin.springlite.beans.BeanDefinition;
 import com.github.jachinlin.springlite.beans.factory.BeanCreationException;
+import com.github.jachinlin.springlite.beans.factory.BeanDefinitionStoreException;
 import com.github.jachinlin.springlite.beans.factory.BeanFactory;
 import com.github.jachinlin.springlite.util.ClassUtils;;
 
@@ -45,10 +46,9 @@ public class DefaultBeanFactory implements BeanFactory {
 				BeanDefinition bd = new GenericBeanDefinition(id,beanClassName);
 				this.beanDefinitionMap.put(id, bd);
 			}
-		} catch (DocumentException e) {		
-			//TODO 抛出异常
-			e.printStackTrace();
-		}finally{
+		} catch (DocumentException e) {
+			throw new BeanDefinitionStoreException("IOException parsing XML document from " + configFile, e);
+		} finally {
 			if(is != null){
 				try {
 					is.close();
