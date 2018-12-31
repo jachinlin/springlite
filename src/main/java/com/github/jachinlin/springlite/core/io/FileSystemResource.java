@@ -20,5 +20,9 @@ public class FileSystemResource implements Resource {
 	public InputStream getInputStream() throws IOException {
 		return new FileInputStream(this.file);
 	}
+	public String getDescription() {
+		
+		return this.path;
+	}
 
 }

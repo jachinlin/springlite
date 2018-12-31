@@ -7,4 +7,6 @@ public interface Resource {
 
 	InputStream getInputStream() throws IOException;
 
+	String getDescription();
+
 }

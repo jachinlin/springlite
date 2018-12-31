@@ -28,4 +28,7 @@ public class ClassPathResource implements Resource {
 		return is;
 		
 	}
+	public String getDescription() {
+		return this.path;
+	}
 }

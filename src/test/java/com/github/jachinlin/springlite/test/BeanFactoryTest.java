@@ -10,6 +10,7 @@ import com.github.jachinlin.springlite.beans.factory.BeanCreationException;
 import com.github.jachinlin.springlite.beans.factory.BeanDefinitionStoreException;
 import com.github.jachinlin.springlite.beans.factory.support.DefaultBeanFactory;
 import com.github.jachinlin.springlite.beans.xml.XmlBeanDefinitionReader;
+import com.github.jachinlin.springlite.core.io.ClassPathResource;
 import com.github.jachinlin.springlite.service.PetStoreService;
 
 public class BeanFactoryTest {
@@ -24,14 +25,14 @@ public class BeanFactoryTest {
 	}
 	@Test
 	public void testGetBeanDefinition() {
-		reader.loadBeanDefinition("petstore.xml");
+		reader.loadBeanDefinition(new ClassPathResource("petstore.xml"));
 		BeanDefinition bd = factory.getBeanDefinition("petStore");
 		assertEquals("com.github.jachinlin.springlite.service.PetStoreService", bd.getClassName());
 	}
 	
 	@Test
 	public void testGetBean() {
-		reader.loadBeanDefinition("petstore.xml");
+		reader.loadBeanDefinition(new ClassPathResource("petstore.xml"));
 		PetStoreService petStore = (PetStoreService)factory.getBean("petStore");
 		assertNotNull(petStore);
 		
@@ -39,24 +40,24 @@ public class BeanFactoryTest {
 	
 	@Test(expected=BeanCreationException.class)
 	public void testNotExistBean() {
-		reader.loadBeanDefinition("petstore.xml");
+		reader.loadBeanDefinition(new ClassPathResource("petstore.xml"));
 		factory.getBean("notExistBean");
 	}
 	
 	@Test(expected=BeanCreationException.class)
 	public void testInvalidBean() {
-		reader.loadBeanDefinition("petstore.xml");
+		reader.loadBeanDefinition(new ClassPathResource("petstore.xml"));
 		factory.getBean("invalidBean");
 	}
 	
 	@Test(expected=BeanDefinitionStoreException.class)
 	public void testNotExistXML() {
-		reader.loadBeanDefinition("notExistXML.xml");
+		reader.loadBeanDefinition(new ClassPathResource("notExistXML.xml"));
 	}
 	
 	@Test(expected=BeanDefinitionStoreException.class)
 	public void testInvalidXML() {
-		reader.loadBeanDefinition("invalidXML.xml");
+		reader.loadBeanDefinition(new ClassPathResource("invalidXML.xml"));
 	}
 
 }

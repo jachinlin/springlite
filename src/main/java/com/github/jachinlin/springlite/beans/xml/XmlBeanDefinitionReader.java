@@ -13,6 +13,7 @@ import com.github.jachinlin.springlite.beans.BeanDefinition;
 import com.github.jachinlin.springlite.beans.factory.BeanDefinitionStoreException;
 import com.github.jachinlin.springlite.beans.factory.support.BeanDefinitionRegister;
 import com.github.jachinlin.springlite.beans.factory.support.GenericBeanDefinition;
+import com.github.jachinlin.springlite.core.io.Resource;
 import com.github.jachinlin.springlite.util.ClassUtils;
 
 public class XmlBeanDefinitionReader {
@@ -26,11 +27,10 @@ public class XmlBeanDefinitionReader {
 	}
 	
 	
-	public void loadBeanDefinition(String configFile) {
+	public void loadBeanDefinition(Resource resource) {
 		InputStream is = null;
 		try{
-			ClassLoader cl = ClassUtils.getDefaultClassLoader();
-			is = cl.getResourceAsStream(configFile);
+			is = resource.getInputStream();
 			
 			SAXReader reader = new SAXReader();
 			Document doc = reader.read(is);
@@ -45,9 +45,9 @@ public class XmlBeanDefinitionReader {
 				this.register.registerBeanDefinition(id, bd);
 			}
 		} catch (DocumentException e) {
-			throw new BeanDefinitionStoreException("IOException parsing XML document from " + configFile, e);
+			throw new BeanDefinitionStoreException("IOException parsing XML document from " + resource.getDescription(), e);
 		} catch (Exception e) {
-			throw new BeanDefinitionStoreException("parse XML document from " + configFile + "failed", e);
+			throw new BeanDefinitionStoreException("parse XML document from " + resource.getDescription() + "failed", e);
 		} finally {
 			if(is != null){
 				try {
