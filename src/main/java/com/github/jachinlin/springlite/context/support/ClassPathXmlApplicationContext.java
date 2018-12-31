@@ -11,7 +11,7 @@ public class ClassPathXmlApplicationContext extends AbstractApplicationContext {
 
 	@Override
 	protected Resource getResource(String configFile) {
-		return new ClassPathResource(configFile);
+		return new ClassPathResource(configFile, this.getBeanClassLoader());
 	}
 	
 	
