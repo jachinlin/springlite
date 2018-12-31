@@ -2,6 +2,7 @@ package com.github.jachinlin.springlite.test;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import com.github.jachinlin.springlite.beans.BeanDefinition;
@@ -9,47 +10,54 @@ import com.github.jachinlin.springlite.beans.factory.BeanCreationException;
 import com.github.jachinlin.springlite.beans.factory.BeanDefinitionStoreException;
 import com.github.jachinlin.springlite.beans.factory.BeanFactory;
 import com.github.jachinlin.springlite.beans.factory.support.DefaultBeanFactory;
+import com.github.jachinlin.springlite.beans.xml.XmlBeanDefinitionReader;
 import com.github.jachinlin.springlite.service.PetStoreService;
 
 public class BeanFactoryTest {
 	
+	private BeanFactory factory;
+	private XmlBeanDefinitionReader reader;
+	
+	@Before
+	public void setUp() {
+		this.factory = new DefaultBeanFactory();
+		this.reader = new XmlBeanDefinitionReader(factory);
+	}
 	@Test
 	public void testGetBeanDefinition() {
-		BeanFactory factory = new DefaultBeanFactory("petstore.xml");
+		reader.loadBeanDefinition("petstore.xml");
 		BeanDefinition bd = factory.getBeanDefinition("petStore");
 		assertEquals("com.github.jachinlin.springlite.service.PetStoreService", bd.getClassName());
 	}
 	
 	@Test
 	public void testGetBean() {
-		BeanFactory factory = new DefaultBeanFactory("petstore.xml");
-		
+		reader.loadBeanDefinition("petstore.xml");
 		PetStoreService petStore = (PetStoreService)factory.getBean("petStore");
-		
 		assertNotNull(petStore);
 		
 	}
 	
 	@Test(expected=BeanCreationException.class)
 	public void testNotExistBean() {
-		BeanFactory factory = new DefaultBeanFactory("petstore.xml");
+		reader.loadBeanDefinition("petstore.xml");
 		factory.getBean("notExistBean");
 	}
 	
 	@Test(expected=BeanCreationException.class)
 	public void testInvalidBean() {
-		BeanFactory factory = new DefaultBeanFactory("petstore.xml");
+		reader.loadBeanDefinition("petstore.xml");
 		factory.getBean("invalidBean");
 	}
 	
 	@Test(expected=BeanDefinitionStoreException.class)
 	public void testNotExistXML() {
-		BeanFactory factory = new DefaultBeanFactory("notExistXML.xml");
+		reader.loadBeanDefinition("notExistXML.xml");
 	}
 	
 	@Test(expected=BeanDefinitionStoreException.class)
 	public void testInvalidXML() {
-		BeanFactory factory = new DefaultBeanFactory("invalidXML.xml");
+		reader.loadBeanDefinition("invalidXML.xml");
 	}
 
 }
