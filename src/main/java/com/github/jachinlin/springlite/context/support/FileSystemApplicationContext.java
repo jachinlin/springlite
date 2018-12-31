@@ -1,22 +1,17 @@
 package com.github.jachinlin.springlite.context.support;
 
-import com.github.jachinlin.springlite.beans.factory.support.DefaultBeanFactory;
-import com.github.jachinlin.springlite.beans.xml.XmlBeanDefinitionReader;
-import com.github.jachinlin.springlite.context.ApplicationContext;
 import com.github.jachinlin.springlite.core.io.FileSystemResource;
+import com.github.jachinlin.springlite.core.io.Resource;
 
-public class FileSystemApplicationContext implements ApplicationContext {
-	
-	private DefaultBeanFactory factory = null;
-	
+public class FileSystemApplicationContext extends AbstractApplicationContext {
+
 	public FileSystemApplicationContext(String configFile) {
-		this.factory = new DefaultBeanFactory();
-		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
-		reader.loadBeanDefinition(new FileSystemResource(configFile));
+		super(configFile);
 	}
 
-	public Object getBean(String beanID) {
-		return this.factory.getBean(beanID);
+	@Override
+	protected Resource getResource(String configFile) {
+		return new FileSystemResource(configFile);
 	}
-
+	
 }
