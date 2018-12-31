@@ -8,14 +8,13 @@ import org.junit.Test;
 import com.github.jachinlin.springlite.beans.BeanDefinition;
 import com.github.jachinlin.springlite.beans.factory.BeanCreationException;
 import com.github.jachinlin.springlite.beans.factory.BeanDefinitionStoreException;
-import com.github.jachinlin.springlite.beans.factory.BeanFactory;
 import com.github.jachinlin.springlite.beans.factory.support.DefaultBeanFactory;
 import com.github.jachinlin.springlite.beans.xml.XmlBeanDefinitionReader;
 import com.github.jachinlin.springlite.service.PetStoreService;
 
 public class BeanFactoryTest {
 	
-	private BeanFactory factory;
+	private DefaultBeanFactory factory;
 	private XmlBeanDefinitionReader reader;
 	
 	@Before

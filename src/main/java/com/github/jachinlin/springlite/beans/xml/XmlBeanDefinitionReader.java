@@ -11,18 +11,18 @@ import org.dom4j.io.SAXReader;
 
 import com.github.jachinlin.springlite.beans.BeanDefinition;
 import com.github.jachinlin.springlite.beans.factory.BeanDefinitionStoreException;
-import com.github.jachinlin.springlite.beans.factory.BeanFactory;
+import com.github.jachinlin.springlite.beans.factory.support.BeanDefinitionRegister;
 import com.github.jachinlin.springlite.beans.factory.support.GenericBeanDefinition;
 import com.github.jachinlin.springlite.util.ClassUtils;
 
 public class XmlBeanDefinitionReader {
 	
-	private BeanFactory factory;
+	private BeanDefinitionRegister register;
 	private static final String ID_ATTRIBUTE = "id";
 	private static final String CLASS_ATTRIBUTE = "class";
 	
-	public XmlBeanDefinitionReader(BeanFactory factory) {
-		this.factory = factory;
+	public XmlBeanDefinitionReader(BeanDefinitionRegister register) {
+		this.register = register;
 	}
 	
 	
@@ -42,7 +42,7 @@ public class XmlBeanDefinitionReader {
 				String id = ele.attributeValue(ID_ATTRIBUTE);
 				String beanClassName = ele.attributeValue(CLASS_ATTRIBUTE);
 				BeanDefinition bd = new GenericBeanDefinition(id,beanClassName);
-				this.factory.registerBeanDefinition(id, bd);
+				this.register.registerBeanDefinition(id, bd);
 			}
 		} catch (DocumentException e) {
 			throw new BeanDefinitionStoreException("IOException parsing XML document from " + configFile, e);

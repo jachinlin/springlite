@@ -8,7 +8,7 @@ import com.github.jachinlin.springlite.beans.factory.BeanCreationException;
 import com.github.jachinlin.springlite.beans.factory.BeanFactory;
 import com.github.jachinlin.springlite.util.ClassUtils;;
 
-public class DefaultBeanFactory implements BeanFactory {
+public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegister {
 	
 	
 	private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<String, BeanDefinition>(64);
