@@ -59,5 +59,18 @@ public class BeanFactoryTest {
 	public void testInvalidXML() {
 		reader.loadBeanDefinition(new ClassPathResource("invalidXML.xml"));
 	}
+	
+	@Test
+	public void testSingletonBean() {
+		reader.loadBeanDefinition(new ClassPathResource("petstore.xml"));
+		BeanDefinition bd = factory.getBeanDefinition("petStoreSingleton");
+		
+		assertTrue(bd.isSingleton());
+		assertFalse(bd.isPrototype());
+		
+		PetStoreService petStore1 = (PetStoreService)factory.getBean("petStoreSingleton");
+		PetStoreService petStore2 = (PetStoreService)factory.getBean("petStoreSingleton");
+		assertTrue(petStore1.equals(petStore2));
+	}
 
 }

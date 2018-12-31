@@ -10,5 +10,10 @@
   <bean id="invalidBean"
         class="invalidxxx" >   
   </bean>
+  
+  <bean id="petStoreSingleton"
+  		scope="singleton"
+        class="com.github.jachinlin.springlite.service.PetStoreService" >   
+  </bean>
 </beans>
 

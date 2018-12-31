@@ -14,13 +14,13 @@ import com.github.jachinlin.springlite.beans.factory.BeanDefinitionStoreExceptio
 import com.github.jachinlin.springlite.beans.factory.support.BeanDefinitionRegister;
 import com.github.jachinlin.springlite.beans.factory.support.GenericBeanDefinition;
 import com.github.jachinlin.springlite.core.io.Resource;
-import com.github.jachinlin.springlite.util.ClassUtils;
 
 public class XmlBeanDefinitionReader {
 	
 	private BeanDefinitionRegister register;
 	private static final String ID_ATTRIBUTE = "id";
 	private static final String CLASS_ATTRIBUTE = "class";
+	private static final String SCOPE_ATTRIBUTE = "scope";
 	
 	public XmlBeanDefinitionReader(BeanDefinitionRegister register) {
 		this.register = register;
@@ -41,7 +41,10 @@ public class XmlBeanDefinitionReader {
 				Element ele = (Element)iter.next();
 				String id = ele.attributeValue(ID_ATTRIBUTE);
 				String beanClassName = ele.attributeValue(CLASS_ATTRIBUTE);
-				BeanDefinition bd = new GenericBeanDefinition(id,beanClassName);
+				BeanDefinition bd = new GenericBeanDefinition(id, beanClassName);
+				if(ele.attribute(SCOPE_ATTRIBUTE) != null) {
+					bd.setScope(ele.attributeValue(SCOPE_ATTRIBUTE));
+				}
 				this.register.registerBeanDefinition(id, bd);
 			}
 		} catch (DocumentException e) {

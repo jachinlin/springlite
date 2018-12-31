@@ -8,7 +8,8 @@ import com.github.jachinlin.springlite.beans.factory.BeanCreationException;
 import com.github.jachinlin.springlite.beans.factory.config.ConfigurableBeanFactory;
 import com.github.jachinlin.springlite.util.ClassUtils;;
 
-public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefinitionRegister {
+public class DefaultBeanFactory extends DefaultSingletonRegistry 
+	implements ConfigurableBeanFactory, BeanDefinitionRegister {
 	
 	
 	private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<String, BeanDefinition>(64);
@@ -27,7 +28,17 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefiniti
 		if(bd == null) {
 			throw new BeanCreationException("Bean definition does not exist");
 		}
-		
+		if(bd.isSingleton()) {
+			Object bean = this.getSingleton(beanID);
+			if(bean == null) {
+				bean = createBean(bd);
+				this.registerSingleton(beanID, bean);
+			}
+			return bean;
+		}
+		return createBean(bd); 		
+	}
+	private Object createBean(BeanDefinition bd) {
 		ClassLoader cl = this.getBeanClassLoader();
 		String beanClassName = bd.getClassName();
 		try {
@@ -35,7 +46,7 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefiniti
 			return cls.newInstance(); // 缺省无参构造函数
 		 } catch (Exception e) {
 			throw new BeanCreationException("Create bean for " + beanClassName + "failed", e);
-		} 		
+		}
 	}
 	public void setBeanClassLoader(ClassLoader beanClassLoader) {
 		this.beanClassLoader = beanClassLoader;
