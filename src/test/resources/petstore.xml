@@ -19,5 +19,11 @@
         class="com.github.jachinlin.springlite.service.PetStoreService" >   
   </bean>
   
+  <bean id="petStorePrototype"
+  		scope="prototype"
+        class="com.github.jachinlin.springlite.service.PetStoreService" >   
+  </bean>
+  
+  
 </beans>
 

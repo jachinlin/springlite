@@ -86,5 +86,17 @@ public class BeanFactoryTest {
 		assertTrue(petStore1.equals(petStore2));
 	}
 	
+	@Test
+	public void testPrototypeBean() {
+		reader.loadBeanDefinition(new ClassPathResource("petstore.xml"));
+		BeanDefinition bd = factory.getBeanDefinition("petStorePrototype");
+		
+		assertFalse(bd.isSingleton());
+		assertTrue(bd.isPrototype());
+		
+		PetStoreService petStore1 = (PetStoreService)factory.getBean("petStorePrototype");
+		PetStoreService petStore2 = (PetStoreService)factory.getBean("petStorePrototype");
+		assertFalse(petStore1.equals(petStore2));
+	}
 
 }
