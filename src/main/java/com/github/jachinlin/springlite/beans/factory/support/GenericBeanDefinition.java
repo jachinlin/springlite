@@ -7,7 +7,7 @@ public class GenericBeanDefinition implements BeanDefinition {
 
 	private String beanID;
 	private String beanClassName;
-	private boolean singleton = false;
+	private boolean singleton = true;
 	private boolean prototype = false;
 	private String scope;
 

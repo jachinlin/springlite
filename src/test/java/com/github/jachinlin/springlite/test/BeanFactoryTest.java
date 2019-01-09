@@ -72,5 +72,19 @@ public class BeanFactoryTest {
 		PetStoreService petStore2 = (PetStoreService)factory.getBean("petStoreSingleton");
 		assertTrue(petStore1.equals(petStore2));
 	}
+	
+	@Test
+	public void testDefaultScope() {
+		reader.loadBeanDefinition(new ClassPathResource("petstore.xml"));
+		BeanDefinition bd = factory.getBeanDefinition("petStoreDefaultScope");
+		
+		assertTrue(bd.isSingleton());
+		assertFalse(bd.isPrototype());
+		
+		PetStoreService petStore1 = (PetStoreService)factory.getBean("petStoreDefaultScope");
+		PetStoreService petStore2 = (PetStoreService)factory.getBean("petStoreDefaultScope");
+		assertTrue(petStore1.equals(petStore2));
+	}
+	
 
 }

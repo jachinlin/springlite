@@ -15,5 +15,9 @@
   		scope="singleton"
         class="com.github.jachinlin.springlite.service.PetStoreService" >   
   </bean>
+  <bean id="petStoreDefaultScope"
+        class="com.github.jachinlin.springlite.service.PetStoreService" >   
+  </bean>
+  
 </beans>
 
