@@ -27,9 +27,18 @@ public class BeanFactoryTest {
 	public void testRefInjection() {
 		
 		PetStoreServiceV2 petStore = (PetStoreServiceV2)factory.getBean("petStore");
+	
+		assertNotNull(petStore.getAccount());
+		assertTrue(petStore.getAccount() instanceof Account );
+	}
+	
+	@Test
+	public void testValueInjection() {
 		
-		 assertNotNull(petStore.getAccount());
-		 assertTrue(petStore.getAccount() instanceof Account );
+		PetStoreServiceV2 petStore = (PetStoreServiceV2)factory.getBean("petStore");
+	
+		assertNotNull(petStore.getOwner());
+		assertTrue(petStore.getOwner().equals("com.github.jachinlin"));
 	}
 
 }
