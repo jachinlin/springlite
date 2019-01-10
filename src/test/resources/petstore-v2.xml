@@ -8,6 +8,8 @@
         class="com.github.jachinlin.springlite.service.PetStoreServiceV2" >
   	<property name="account" ref="account"/>
   	<property name="owner" value="com.github.jachinlin"/>
+  	<property name="version" value="2"/>
+  	<property name="active" value="true"/>
   </bean> 
   
  <bean id="account"  class="com.github.jachinlin.springlite.service.Account">   

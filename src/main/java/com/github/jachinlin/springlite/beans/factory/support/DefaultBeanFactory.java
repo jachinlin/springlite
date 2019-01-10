@@ -9,6 +9,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.github.jachinlin.springlite.beans.BeanDefinition;
 import com.github.jachinlin.springlite.beans.PropertyValue;
+import com.github.jachinlin.springlite.beans.SimpleTypeConverter;
+import com.github.jachinlin.springlite.beans.TypeConverter;
 import com.github.jachinlin.springlite.beans.factory.BeanCreationException;
 import com.github.jachinlin.springlite.beans.factory.config.ConfigurableBeanFactory;
 import com.github.jachinlin.springlite.util.ClassUtils;;
@@ -57,6 +59,7 @@ public class DefaultBeanFactory extends DefaultSingletonRegistry
 		}
 		
 		BeanDefinitionValueResolver valueResolver = new BeanDefinitionValueResolver(this);
+		TypeConverter converter = new SimpleTypeConverter();
 	
 		try {
 			BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
@@ -69,7 +72,8 @@ public class DefaultBeanFactory extends DefaultSingletonRegistry
 				
 				for (PropertyDescriptor pd : pds) {
 					if(pd.getName().equals(propertyName)){
-						pd.getWriteMethod().invoke(bean, resolvedValue);
+						Object convertedValue = converter.convertIfNecessary(resolvedValue, pd.getPropertyType());
+						pd.getWriteMethod().invoke(bean, convertedValue);
 						break;
 					}
 				}

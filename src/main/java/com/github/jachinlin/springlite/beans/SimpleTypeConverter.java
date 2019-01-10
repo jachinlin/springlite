@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.github.jachinlin.springlite.beans.propertyeditors.CustomBooleanEditor;
 import com.github.jachinlin.springlite.beans.propertyeditors.CustomNumberEditor;
+import com.github.jachinlin.springlite.util.ClassUtils;
 
 public class SimpleTypeConverter implements TypeConverter {
 	
@@ -18,17 +19,20 @@ public class SimpleTypeConverter implements TypeConverter {
 	}
 	
 	public <T> T convertIfNecessary(Object value, Class<T> requiredType) throws TypeMismatchException {
-		
-		if(value instanceof String){
-			PropertyEditor editor = findDefaultEditor(requiredType);
-			try{
-				editor.setAsText((String)value);
-			}catch(IllegalArgumentException e){
-				throw new TypeMismatchException(value,requiredType);
+		if(ClassUtils.isAssignableValue(requiredType, value)){
+			return (T)value;			
+		} else {
+			if(value instanceof String){
+				PropertyEditor editor = findDefaultEditor(requiredType);
+				try{
+					editor.setAsText((String)value);
+				}catch(IllegalArgumentException e){
+					throw new TypeMismatchException(value,requiredType);
+				}
+				return (T)editor.getValue();
+			} else{
+				throw new RuntimeException("Todo : can't convert value for "+value +" class:"+requiredType);
 			}
-			return (T)editor.getValue();
-		} else{
-			throw new RuntimeException("Todo : can't convert value for "+value +" class:"+requiredType);
 		}
 		
 	}

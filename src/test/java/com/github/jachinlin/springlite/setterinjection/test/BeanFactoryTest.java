@@ -40,5 +40,23 @@ public class BeanFactoryTest {
 		assertNotNull(petStore.getOwner());
 		assertTrue(petStore.getOwner().equals("com.github.jachinlin"));
 	}
+	
+	@Test
+	public void testIntValueInjection() {
+		
+		PetStoreServiceV2 petStore = (PetStoreServiceV2)factory.getBean("petStore");
+	
+		assertNotNull(petStore.getVersion());
+		assertEquals(2, petStore.getVersion());
+	}
+	
+	@Test
+	public void testBoolValueInjection() {
+		
+		PetStoreServiceV2 petStore = (PetStoreServiceV2)factory.getBean("petStore");
+	
+		assertNotNull(petStore.isActive());
+		assertEquals(true, petStore.isActive());
+	}
 
 }
