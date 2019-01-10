@@ -1,6 +1,10 @@
 package com.github.jachinlin.springlite.beans.factory.support;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.github.jachinlin.springlite.beans.BeanDefinition;
+import com.github.jachinlin.springlite.beans.PropertyValue;
 
 public class GenericBeanDefinition implements BeanDefinition {
 
@@ -10,7 +14,9 @@ public class GenericBeanDefinition implements BeanDefinition {
 	private boolean singleton = true;
 	private boolean prototype = false;
 	private String scope;
-
+	
+	List<PropertyValue> propertyValues = new ArrayList<PropertyValue>();
+	
 	public GenericBeanDefinition(String beanID, String beanClassName) {
 		this.beanID = beanID;
 		this.beanClassName = beanClassName;
@@ -39,6 +45,15 @@ public class GenericBeanDefinition implements BeanDefinition {
 	public boolean isPrototype() {
 		
 		return this.prototype ;
+	}
+
+	public List<PropertyValue> getPropertyValues() {
+		return this.propertyValues;
+	}
+
+	public void addPropertyValue(PropertyValue pv) {
+		this.propertyValues.add(pv);
+		
 	}
 
 }
