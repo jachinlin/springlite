@@ -10,6 +10,7 @@ import org.junit.Test;
 import com.github.jachinlin.springlite.beans.BeanDefinition;
 import com.github.jachinlin.springlite.beans.PropertyValue;
 import com.github.jachinlin.springlite.beans.factory.config.RuntimeBeanReference;
+import com.github.jachinlin.springlite.beans.factory.config.TypeStringValue;
 import com.github.jachinlin.springlite.beans.factory.support.DefaultBeanFactory;
 import com.github.jachinlin.springlite.beans.xml.XmlBeanDefinitionReader;
 import com.github.jachinlin.springlite.core.io.ClassPathResource;
@@ -35,6 +36,19 @@ public class BeanDefinitionTest {
 		
 		assertNotNull(pv);
 		assertTrue(pv.getValue() instanceof RuntimeBeanReference);
+		
+	}
+	
+	@Test
+	public void testPropertyValueOfValue() {
+		
+		BeanDefinition bd = factory.getBeanDefinition("petStore");
+		List<PropertyValue> pvs = bd.getPropertyValues();
+		PropertyValue pv = this.getPropertyValue("owner", pvs);
+		
+		assertNotNull(pv);
+		assertTrue(pv.getValue() instanceof TypeStringValue);
+		assertTrue(((TypeStringValue)pv.getValue()).getValue().equals("com.github.jachinlin"));
 		
 	}
 	

@@ -15,6 +15,7 @@ import com.github.jachinlin.springlite.beans.BeanDefinition;
 import com.github.jachinlin.springlite.beans.PropertyValue;
 import com.github.jachinlin.springlite.beans.factory.BeanDefinitionStoreException;
 import com.github.jachinlin.springlite.beans.factory.config.RuntimeBeanReference;
+import com.github.jachinlin.springlite.beans.factory.config.TypeStringValue;
 import com.github.jachinlin.springlite.beans.factory.support.BeanDefinitionRegister;
 import com.github.jachinlin.springlite.beans.factory.support.GenericBeanDefinition;
 import com.github.jachinlin.springlite.core.io.Resource;
@@ -29,6 +30,7 @@ public class XmlBeanDefinitionReader {
 	private static final String PROPERTY_ELEMENT = "property";
 	private static final String NAME_ATTRIBUTE = "name";
 	private static final String REF_ATTRIBUTE = "ref";
+	private static final String VALUE_ATTRIBUTE = "value";
 	
 	protected final Log logger = LogFactory.getLog(getClass());
 	
@@ -98,6 +100,8 @@ public class XmlBeanDefinitionReader {
 
 		
 		boolean hasRefAttribute = (ele.attribute(REF_ATTRIBUTE)!=null);
+		boolean hasValueAttribute = (ele.attribute(VALUE_ATTRIBUTE)!=null);
+		
 		
 		if (hasRefAttribute) {
 			String refName = ele.attributeValue(REF_ATTRIBUTE);
@@ -106,7 +110,11 @@ public class XmlBeanDefinitionReader {
 			}
 			RuntimeBeanReference ref = new RuntimeBeanReference(refName);			
 			return ref;
-		}		
+		} else if (hasValueAttribute) {
+			String v = ele.attributeValue(VALUE_ATTRIBUTE);
+			TypeStringValue valueHolder = new TypeStringValue(v);
+			return valueHolder;
+		}
 		else {
 			
 			throw new RuntimeException(elementName + " must specify a ref or value");
