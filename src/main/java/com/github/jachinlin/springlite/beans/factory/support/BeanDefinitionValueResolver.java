@@ -2,6 +2,7 @@ package com.github.jachinlin.springlite.beans.factory.support;
 
 import com.github.jachinlin.springlite.beans.factory.BeanFactory;
 import com.github.jachinlin.springlite.beans.factory.config.RuntimeBeanReference;
+import com.github.jachinlin.springlite.beans.factory.config.TypeStringValue;
 
 public class BeanDefinitionValueResolver {
 	private BeanFactory beanFactory;
@@ -16,6 +17,9 @@ public class BeanDefinitionValueResolver {
 			String refName = ref.getBeanName();			
 			Object bean = this.beanFactory.getBean(refName);				
 			return bean;
+			
+		} else if(value instanceof TypeStringValue){
+			return ((TypeStringValue)(value)).getValue();
 			
 		} else {
 			//TODO

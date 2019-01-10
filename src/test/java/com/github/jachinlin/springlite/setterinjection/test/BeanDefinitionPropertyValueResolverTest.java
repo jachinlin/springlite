@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.github.jachinlin.springlite.beans.factory.config.RuntimeBeanReference;
+import com.github.jachinlin.springlite.beans.factory.config.TypeStringValue;
 import com.github.jachinlin.springlite.beans.factory.support.BeanDefinitionValueResolver;
 import com.github.jachinlin.springlite.beans.factory.support.DefaultBeanFactory;
 import com.github.jachinlin.springlite.beans.xml.XmlBeanDefinitionReader;
@@ -34,6 +35,18 @@ public class BeanDefinitionPropertyValueResolverTest {
 		
 		assertNotNull(value);		
 		assertTrue(value instanceof Account);				
+	}
+	
+	@Test
+	public void testResolveTypeStringValue() {
+		
+		BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(factory);
+		
+		TypeStringValue strValue = new TypeStringValue("test");
+		Object value = resolver.resolveValueIfNecessary(strValue);
+		
+		assertNotNull(value);		
+		assertEquals("test", value);				
 	}
 
 }
