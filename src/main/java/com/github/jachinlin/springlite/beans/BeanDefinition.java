@@ -16,5 +16,6 @@ public interface BeanDefinition {
 	boolean isPrototype();
 	public List<PropertyValue> getPropertyValues();
 	public void addPropertyValue(PropertyValue pv);
+	public ConstructorArgument getConstructorArgument();
 
 }

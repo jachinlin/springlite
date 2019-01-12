@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.jachinlin.springlite.beans.BeanDefinition;
+import com.github.jachinlin.springlite.beans.ConstructorArgument;
 import com.github.jachinlin.springlite.beans.PropertyValue;
 
 public class GenericBeanDefinition implements BeanDefinition {
@@ -16,6 +17,7 @@ public class GenericBeanDefinition implements BeanDefinition {
 	private String scope;
 	
 	List<PropertyValue> propertyValues = new ArrayList<PropertyValue>();
+	private ConstructorArgument constructorArgument = new ConstructorArgument();
 	
 	public GenericBeanDefinition(String beanID, String beanClassName) {
 		this.beanID = beanID;
@@ -54,6 +56,10 @@ public class GenericBeanDefinition implements BeanDefinition {
 	public void addPropertyValue(PropertyValue pv) {
 		this.propertyValues.add(pv);
 		
+	}
+
+	public ConstructorArgument getConstructorArgument() {
+		return this.constructorArgument ;
 	}
 
 }

@@ -12,6 +12,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.github.jachinlin.springlite.beans.BeanDefinition;
+import com.github.jachinlin.springlite.beans.ConstructorArgument;
 import com.github.jachinlin.springlite.beans.PropertyValue;
 import com.github.jachinlin.springlite.beans.factory.BeanDefinitionStoreException;
 import com.github.jachinlin.springlite.beans.factory.config.RuntimeBeanReference;
@@ -28,6 +29,7 @@ public class XmlBeanDefinitionReader {
 	private static final String CLASS_ATTRIBUTE = "class";
 	private static final String SCOPE_ATTRIBUTE = "scope";
 	private static final String PROPERTY_ELEMENT = "property";
+	private static final String CONSTRUCTOR_ARG_ELEMENT = "constructor-arg";
 	private static final String NAME_ATTRIBUTE = "name";
 	private static final String REF_ATTRIBUTE = "ref";
 	private static final String VALUE_ATTRIBUTE = "value";
@@ -57,6 +59,7 @@ public class XmlBeanDefinitionReader {
 				if(ele.attribute(SCOPE_ATTRIBUTE) != null) {
 					bd.setScope(ele.attributeValue(SCOPE_ATTRIBUTE));
 				}
+				parseConstructorArgElements(ele,bd);
 				parsePropertyElement(ele,bd);
 				this.register.registerBeanDefinition(id, bd);
 			}
@@ -76,6 +79,24 @@ public class XmlBeanDefinitionReader {
 		
 		
 	}
+	
+	private void parseConstructorArgElements(Element beanEle, BeanDefinition bd) {
+		Iterator<?> iter = beanEle.elementIterator(CONSTRUCTOR_ARG_ELEMENT);
+		while(iter.hasNext()){
+			Element ele = (Element)iter.next();
+			parseConstructorArgElement(ele, bd);			
+		}
+		
+	}
+	
+	public void parseConstructorArgElement(Element ele, BeanDefinition bd) {
+		
+		
+		Object value = parsePropertyValue(ele, bd, null);
+		ConstructorArgument.ValueHolder valueHolder = new ConstructorArgument.ValueHolder(value);
+		bd.getConstructorArgument().addArgumentValue(valueHolder);		
+	}
+
 	private void parsePropertyElement(Element beanElem, BeanDefinition bd) {
 		Iterator<?> iter= beanElem.elementIterator(PROPERTY_ELEMENT);
 		while(iter.hasNext()){
@@ -86,7 +107,7 @@ public class XmlBeanDefinitionReader {
 				break;
 			}
 	
-			Object val = parsePropertyValue(propElem, bd);
+			Object val = parsePropertyValue(propElem, bd, propertyName);
 			PropertyValue pv = new PropertyValue(propertyName, val);
 			
 			bd.addPropertyValue(pv);
@@ -94,9 +115,10 @@ public class XmlBeanDefinitionReader {
 		
 	}
 	
-	private Object parsePropertyValue(Element ele, BeanDefinition bd) {
-		String propertyName = ele.attributeValue(NAME_ATTRIBUTE);
-		String elementName = "<property> element for property '" + propertyName + "'";
+	private Object parsePropertyValue(Element ele, BeanDefinition bd, String propertyName) {
+		String elementName = (propertyName != null) ?
+				"<property> element for property '" + propertyName + "'" :
+				"<constructor-arg> element";
 
 		
 		boolean hasRefAttribute = (ele.attribute(REF_ATTRIBUTE)!=null);
