@@ -30,4 +30,8 @@ public class ConstructorArgument {
 		
 	}
 
+	public boolean isEmpty() {
+		return this.argumentValues.isEmpty();
+	}
+
 }
