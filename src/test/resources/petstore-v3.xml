@@ -8,6 +8,12 @@
         class="com.github.jachinlin.springlite.service.PetStoreServiceV3" >  
    	<constructor-arg  ref="account"/>      
   </bean>
+  
+  <bean id="petStoreV3"
+        class="com.github.jachinlin.springlite.service.PetStoreServiceV3" >  
+   	<constructor-arg  ref="account"/>
+   	<constructor-arg  value="3"/>     
+  </bean>
 
   <bean id="account"  class="com.github.jachinlin.springlite.service.Account"></bean>
 

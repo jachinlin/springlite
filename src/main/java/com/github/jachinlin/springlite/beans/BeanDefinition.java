@@ -17,5 +17,6 @@ public interface BeanDefinition {
 	public List<PropertyValue> getPropertyValues();
 	public void addPropertyValue(PropertyValue pv);
 	public ConstructorArgument getConstructorArgument();
+	public String getBeanID();
 
 }
