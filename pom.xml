@@ -32,6 +32,11 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.ow2.asm</groupId>
+		  	<artifactId>asm</artifactId>
+		  	<version>7.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
