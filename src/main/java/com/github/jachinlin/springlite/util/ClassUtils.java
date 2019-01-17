@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class ClassUtils {
+	/** The package separator character: '.' */
+	private static final char PACKAGE_SEPARATOR = '.';
+
+	/** The path separator character: '/' */
+	private static final char PATH_SEPARATOR = '/';
 	
 	/**
 	 * Map with primitive wrapper type as key and corresponding primitive
@@ -65,5 +70,10 @@ public abstract class ClassUtils {
 			}
 		}
 		return false;
+	}
+
+	public static String convertClassNameToResourcePath(String className) {
+		Assert.notNull(className, "Class name must not be null");
+		return className.replace(PACKAGE_SEPARATOR, PATH_SEPARATOR);
 	}
 }
