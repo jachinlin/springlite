@@ -9,8 +9,9 @@ import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Type;
 
 import com.github.jachinlin.springlite.annotation.AnnotationAttributes;
+import com.github.jachinlin.springlite.core.type.AnnotationMetadata;
 
-public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisitor {
+public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisitor implements AnnotationMetadata {
 	
 	private final Set<String> annotationSet = new LinkedHashSet<String>(4);
 	private final Map<String, AnnotationAttributes> attributeMap = new LinkedHashMap<String, AnnotationAttributes>(4);

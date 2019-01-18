@@ -3,9 +3,10 @@ package com.github.jachinlin.springlite.core.type.classreading;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
+import com.github.jachinlin.springlite.core.type.ClassMetadata;
 import com.github.jachinlin.springlite.util.ClassUtils;
 
-public class ClassMetadataReadingVisitor extends ClassVisitor{
+public class ClassMetadataReadingVisitor extends ClassVisitor implements ClassMetadata {
 	
 	private String className;
 
