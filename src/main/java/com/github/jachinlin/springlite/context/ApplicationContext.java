@@ -1,7 +1,7 @@
 package com.github.jachinlin.springlite.context;
 
-import com.github.jachinlin.springlite.beans.factory.config.ConfigurableBeanFactory;
+import com.github.jachinlin.springlite.beans.factory.BeanFactory;
 
-public interface ApplicationContext extends ConfigurableBeanFactory{
+public interface ApplicationContext extends BeanFactory{
 
 }

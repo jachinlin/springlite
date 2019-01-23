@@ -1,8 +1,6 @@
 package com.github.jachinlin.springlite.beans.factory.config;
 
-import com.github.jachinlin.springlite.beans.factory.BeanFactory;
-
-public interface ConfigurableBeanFactory extends BeanFactory {
+public interface ConfigurableBeanFactory extends AutowireCapableBeanFactory {
 	
 	void setBeanClassLoader(ClassLoader beanClassLoader);
 	ClassLoader getBeanClassLoader();
