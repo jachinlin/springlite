@@ -75,5 +75,8 @@ public class AutowiredAnnotationProcessor {
 			return true;
 		}
 	}
+	public void setBeanFactory(AutowireCapableBeanFactory beanFactory){
+		this.beanFactory = beanFactory;
+	}
 	
 }

@@ -12,6 +12,8 @@ import com.github.jachinlin.springlite.beans.PropertyValue;
 import com.github.jachinlin.springlite.beans.SimpleTypeConverter;
 import com.github.jachinlin.springlite.beans.TypeConverter;
 import com.github.jachinlin.springlite.beans.factory.BeanCreationException;
+import com.github.jachinlin.springlite.beans.factory.annotation.AutowiredAnnotationProcessor;
+import com.github.jachinlin.springlite.beans.factory.annotation.InjectionMetadata;
 import com.github.jachinlin.springlite.beans.factory.config.ConfigurableBeanFactory;
 import com.github.jachinlin.springlite.beans.factory.config.DependencyDescriptor;
 import com.github.jachinlin.springlite.util.ClassUtils;;
@@ -53,6 +55,13 @@ public class DefaultBeanFactory extends DefaultSingletonRegistry
 	}
 	
 	protected void populateBean(BeanDefinition bd, Object bean){
+		
+		// TODO abstract here
+		AutowiredAnnotationProcessor postProcessor = new AutowiredAnnotationProcessor();
+		postProcessor.setBeanFactory(this);
+		InjectionMetadata md =postProcessor.buildAutowiringMetadata(bean.getClass());
+		md.inject(bean);
+		
 		List<PropertyValue> pvs = bd.getPropertyValues();
 		
 		if (pvs == null || pvs.isEmpty()) {
