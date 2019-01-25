@@ -15,7 +15,7 @@ public class PackageResourceLoaderTest {
 	public void testGetResources() throws IOException{
 		PackageResourceLoader loader = new PackageResourceLoader();
 		Resource[] resources = loader.getResources("com.github.jachinlin.springlite.service");
-		assertEquals(5, resources.length);
+		assertEquals(6, resources.length);
 		
 	}
 
