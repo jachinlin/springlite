@@ -4,4 +4,7 @@ public class PetStoreService {
 	public void placeOrder(){
 		System.out.println("place order");	
 	}
+	
+	public void getAccount(){
+	}
 }
