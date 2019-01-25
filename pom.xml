@@ -23,6 +23,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+		    <groupId>com.github.stefanbirkner</groupId>
+		    <artifactId>system-rules</artifactId>
+		    <version>1.18.0</version>
+		    <scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
 			<version>1.6.1</version>
