@@ -1,5 +1,6 @@
 package com.github.jachinlin.springlite.context.support;
 
+import com.github.jachinlin.springlite.beans.factory.NoSuchBeanDefinitionException;
 import com.github.jachinlin.springlite.beans.factory.support.DefaultBeanFactory;
 import com.github.jachinlin.springlite.beans.xml.XmlBeanDefinitionReader;
 import com.github.jachinlin.springlite.context.ApplicationContext;
@@ -30,5 +31,9 @@ public abstract class AbstractApplicationContext implements ApplicationContext{
 
 	public ClassLoader getBeanClassLoader() {
 		return (this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader());
+	}
+	
+	public Class<?> getType(String name) throws NoSuchBeanDefinitionException {
+		return this.factory.getType(name);
 	}
 }

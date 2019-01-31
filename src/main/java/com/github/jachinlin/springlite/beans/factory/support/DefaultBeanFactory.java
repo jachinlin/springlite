@@ -12,6 +12,7 @@ import com.github.jachinlin.springlite.beans.PropertyValue;
 import com.github.jachinlin.springlite.beans.SimpleTypeConverter;
 import com.github.jachinlin.springlite.beans.TypeConverter;
 import com.github.jachinlin.springlite.beans.factory.BeanCreationException;
+import com.github.jachinlin.springlite.beans.factory.NoSuchBeanDefinitionException;
 import com.github.jachinlin.springlite.beans.factory.annotation.AutowiredAnnotationProcessor;
 import com.github.jachinlin.springlite.beans.factory.annotation.InjectionMetadata;
 import com.github.jachinlin.springlite.beans.factory.config.ConfigurableBeanFactory;
@@ -141,6 +142,13 @@ public class DefaultBeanFactory extends DefaultSingletonRegistry
 			}
 		}
 	}
-	
+	public Class<?> getType(String name) throws NoSuchBeanDefinitionException {
+		BeanDefinition bd = this.getBeanDefinition(name);
+		if(bd == null){
+			throw new NoSuchBeanDefinitionException(name);
+		}
+		resolveBeanClass(bd);		
+		return bd.getBeanClass();
+	}
 
 }
